@@ -1,0 +1,12 @@
+</Loads>
+	<LoadData>
+		<loadcurve id="1" type="smooth">
+			<point>0,0</point>
+			<point>1,1</point>
+		</loadcurve>
+	</LoadData>
+	<Output>
+		<plotfile type="febio">
+			<var type="displacement"/>
+			<var type="stress"/>
+		</plotfile>
