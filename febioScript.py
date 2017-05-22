@@ -2,23 +2,23 @@ from __future__ import division
 import os, itertools, subprocess, fileinput, shutil
 from math import log10, floor, sqrt
 from numpy import random
+from sklearn.preprocessing import normalize
 
 # Folder containing simulation files
 root_dir = 'user_defined_folder'
 # Folder containing FEBio installation folder
 febio_root = 'febio_root'
 
-# Define force components
-a=1/sqrt(2)
-b=1/sqrt(3)
-c=1
-d=1/sqrt(4)
-e=sqrt(2/5)
-f=sqrt(1/5)
+# Create random normalized force vectors
+nforces = 30
 
-# Define all forces to apply [Fx,Fy,Fz]
-forcez = [[0,0,-c],[b,b,-b],[a,0,-a],[0,a,-a],[-a,0,-a],[0,-a,-a],[b,-b,-b],[-b,b,-b],[-b,-b,-b],[a,d,-d],[-a,d,-d],[-a,-d,-d],[d,a,-d],[-d,a,-d],[-d,-a,-d],[d,-a,-d],[d,d,-a],[-d,-d,-a],[a,-d,-d],[-d,d,-a],[e,e,-f],[e,-e,-f],[e,f,-e],[e,-f,-e],[-e,-f,-e],[-e,-e,-f],[f,e,-e],[f,-e,-e],[-f,-e,-e],[-f,e,-e]]
-forcez = [[-f,e,-e]]
+forcez = []
+for f in range(nforces):
+	for xyz in range(3):
+		temp = random.rand(3)
+	temp = normalize(temp, norm = "l2")
+	forcez.append(temp)
+
 
 # Define nodes of the mesh at which to apply the forces (as specified by FEBio)
 force_nodes = [82,91,101,107,129,140,148,163,174,185]
@@ -49,25 +49,25 @@ def run_simulation( force_nodes, forcez ):
 
 
 			line = str(force_node)
-			ff = open('Force Data.txt','w')
-			ff.write('\n'.join('%s %s %s' % x for x in forces))
-			ff.close()
+			with open('Force Data.txt','w') as ff:
+				ff.write('\n'.join('%s %s %s' % x for x in forces))
+			
 
 			for i in range(0,len(forces)):
 				filename = '0_Insert' + str(i) + '.txt'
-				f = open(filename, 'w')
-				string_x = '<nodal_load bc="x" lc="1"> <node id="' + str(force_node) + '">' + str(forces[i][0]) + '</node> </nodal_load>\n'
-				string_y = '<nodal_load bc="y" lc="1"> <node id="' + str(force_node) + '">' + str(forces[i][1]) + '</node> </nodal_load>\n'
-				string_z = '<nodal_load bc="z" lc="1"> <node id="' + str(force_node) + '">' + str(forces[i][2]) + '</node> </nodal_load>\n'
-				f.write(string_x + string_y + string_z)
-				f.close()
+				with open(filename, 'w') as f:
+					string_x = '<nodal_load bc="x" lc="1"> <node id="' + str(force_node) + '">' + str(forces[i][0]) + '</node> </nodal_load>\n'
+					string_y = '<nodal_load bc="y" lc="1"> <node id="' + str(force_node) + '">' + str(forces[i][1]) + '</node> </nodal_load>\n'
+					string_z = '<nodal_load bc="z" lc="1"> <node id="' + str(force_node) + '">' + str(forces[i][2]) + '</node> </nodal_load>\n'
+					f.write(string_x + string_y + string_z)
+				
 
 				filename_2 = '1_Insert' + str(i) + '.txt'
-				g = open(filename_2, 'w')
-				string_1 = '<logfile>\n <node_data data="x;y;z" file = "coord_data' + str(i) + '.txt" delim=", "> </node_data>\n'
-				string_2 = '<node_data data="ux;uy;uz" file = "displacement_data' + str(i) + '.txt" delim=", "> </node_data>\n </logfile>\n'
-				g.write(string_1 + string_2)
-				g.close()
+				with open(filename_2, 'w') as g:
+					string_1 = '<logfile>\n <node_data data="x;y;z" file = "coord_data' + str(i) + '.txt" delim=", "> </node_data>\n'
+					string_2 = '<node_data data="ux;uy;uz" file = "displacement_data' + str(i) + '.txt" delim=", "> </node_data>\n </logfile>\n'
+					g.write(string_1 + string_2)
+				
 
 				files_list = ['Simulation 1.txt', filename, 'Simulation 2.txt', filename_2, 'Simulation 3.txt']
 				output_file = os.path.join(par_dir,'Python Output','FEBio Simulation Output' + str(i) + '.feb')
@@ -83,4 +83,4 @@ def run_simulation( force_nodes, forcez ):
 				print run_string
 				subprocess.call([run_string], shell=True)
 
-run_simulation( force_nodes, forcez)
+run_simulation(force_nodes, forcez)

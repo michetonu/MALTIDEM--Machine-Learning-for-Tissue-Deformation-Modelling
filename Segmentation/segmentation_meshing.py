@@ -9,7 +9,6 @@ import tkMessageBox
 ## File selection for labelling
 
 top = Tk()
-
 top.withdraw() # Keep the root window from appearing
 top.update()
 
@@ -26,12 +25,9 @@ else:
     tkMessageBox.showerror("No file selected. The program will stop.")
     sys.exit()
 
-#top.mainloop()
-
 ## Options selection
 
 top = Tk()
-
 top.withdraw() # Keep the root window from appearing
 top.update()
 
