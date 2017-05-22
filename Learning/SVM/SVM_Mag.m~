@@ -1,4 +1,4 @@
-%% Train and test an SVM model for the displacement magnitude
+%% Train and test an SVM model fo
 
 %Load data (if not already loaded)
 load_data = 1;
