@@ -1,5 +1,5 @@
 iterations = load('iterations.mat');
-coordinates = load('DATA_coord.mat');
+coordinates = load('data_coord.mat');
 nodes_list = load('nodes_list.mat');
 force_nodes = load('force_nodes.mat');
 
