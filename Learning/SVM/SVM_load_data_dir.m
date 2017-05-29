@@ -1,15 +1,17 @@
-function [nn_input,nn_input_compare,nn_output,nn_output_compare] = SVM_DIr_Setup(force_node_compare,node_choice,dir)
+function [nn_input,nn_input_compare,nn_output,nn_output_compare] = SVM_load_data_dir(force_node_compare,node_choice)
 
-    
-load('/Users/MicTonutti/Dropbox/MRes/Individual Project/Modelling_New/Mesh_Variables.mat');
-cmbrain = centerOfMass(main_brain.img);
+iterations = load('iterations.mat');
+coordinates = load('data_coord.mat');
+nodes_list = load('nodes_list.mat');
+force_nodes = load('force_nodes.mat');
 
-load('/Volumes/Macintosh HD/Users/MicTonutti/Documents/Imperial/MRes/Individual Project 2/Nodewise Simulations/Node101/Variables1.mat','DATA_coord','nodes_list');
-
-force_nodes = [82;91;101;107;129;140;148;163;174;185;203];
-%force_node_compare = 82;
+%Force node to test network
+force_node_compare = 91;
+%Set aside data for testing
 force_nodes = force_nodes(force_nodes(:,1)~=force_node_compare,1);
+%Number of force steps (from 0 to 1N)
 fn = 20;
+
 nn_input = NaN;
 nn_output = NaN;
 %node_choice = 10;
