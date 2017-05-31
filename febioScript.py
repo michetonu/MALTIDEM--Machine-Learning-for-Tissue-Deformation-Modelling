@@ -11,7 +11,6 @@ febio_root = 'febio_root'
 
 # Create random normalized force vectors
 nforces = 30
-
 forcez = []
 for f in range(nforces):
 	for xyz in range(3):
@@ -27,7 +26,6 @@ def run_simulation( force_nodes, forcez ):
 
 	for force_node in force_nodes:
 		for force in forcez:
-
 			x = str(round(force[0],1))
 			y = str(round(force[1],1))
 			z = str(round(force[2],1))
@@ -46,13 +44,11 @@ def run_simulation( force_nodes, forcez ):
 				newforce = [x*i/2 for x in forf]
 			 	newforce = tuple(newforce)
 			 	forces.append(newforce)
-
-
+				
 			line = str(force_node)
 			with open('Force Data.txt','w') as ff:
 				ff.write('\n'.join('%s %s %s' % x for x in forces))
 			
-
 			for i in range(0,len(forces)):
 				filename = '0_Insert' + str(i) + '.txt'
 				with open(filename, 'w') as f:
@@ -61,7 +57,6 @@ def run_simulation( force_nodes, forcez ):
 					string_z = '<nodal_load bc="z" lc="1"> <node id="' + str(force_node) + '">' + str(forces[i][2]) + '</node> </nodal_load>\n'
 					f.write(string_x + string_y + string_z)
 				
-
 				filename_2 = '1_Insert' + str(i) + '.txt'
 				with open(filename_2, 'w') as g:
 					string_1 = '<logfile>\n <node_data data="x;y;z" file = "coord_data' + str(i) + '.txt" delim=", "> </node_data>\n'
