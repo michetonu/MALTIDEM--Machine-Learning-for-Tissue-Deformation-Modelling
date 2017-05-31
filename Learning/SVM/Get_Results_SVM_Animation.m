@@ -1,3 +1,7 @@
+% Get results for both direction and magnitude for a given force node in
+% order to build an animation (every 10th node) ? for visualization
+% purposes
+
 results = NaN(1,4);
 force_node_compare = 82;
 e = NaN;
