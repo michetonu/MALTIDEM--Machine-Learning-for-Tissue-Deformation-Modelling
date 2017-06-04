@@ -9,9 +9,9 @@ This thesis proposes a novel data-based approach to model the deformation of a b
 
 ![Alt text](https://cloud.githubusercontent.com/assets/18726750/26302760/996d18ce-3ee5-11e7-9002-cde00991016e.png)
 
-Pre-requisites to create custom meshes:
+Dependencies to create custom meshes:
 1) BrainSuite (http://brainsuite.org/) or equivalent software to segment and label the brain
 2) ITK-SNAP (http://www.itksnap.org/) or 3D Slicer (https://www.slicer.org/) or equivalent to segment the tumour.
 3) MATLAB's iso2mesh toolbox (iso2mesh.sourceforge.net/)
 
-A complete brain mesh file is provided to test the code.
+A brain mesh file is provided to test the code.
