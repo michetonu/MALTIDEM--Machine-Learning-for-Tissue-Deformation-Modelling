@@ -1,12 +1,10 @@
-function [nn_input,nn_input_compare,nn_output,nn_output_compare] = GPR_Function_Setup(force_node_compare)
+function [nn_input,nn_input_compare,nn_output,nn_output_compare] = GPR_function_setup(force_node_compare)
     
-load('/Users/MicTonutti/Dropbox/MRes/Individual Project/Modelling_New/Mesh_Variables.mat');
-cmbrain = centerOfMass(main_brain.img);
+iterations = load('iterations.mat');
+nodes_list = load('nodes_list.mat');
+force_nodes = load('force_nodes.mat');
 
-load('/Volumes/Macintosh HD/Users/MicTonutti/Documents/Imperial/MRes/Individual Project 2/Nodewise Simulations/Node101/Variables1.mat','DATA_coord','nodes_list');
 
-force_nodes = [82;91;101;107;129;140;148;163;174;185;203];
-%force_node_compare = 82;
 force_nodes = force_nodes(force_nodes(:,1)~=force_node_compare,1);
 fn = 20;
 nn_input = NaN;

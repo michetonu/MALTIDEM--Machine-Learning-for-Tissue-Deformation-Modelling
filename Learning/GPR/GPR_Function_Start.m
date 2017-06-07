@@ -1,7 +1,10 @@
 results = NaN(1,4);
 
 force_nodes = [82;91;101;107;129;140;148;163;174;185;203];
-
+error = []
+performance = []
+stdev = []
+maxerr = []
 i=1;
 for fnc = 1:size(force_nodes)
     force_node_compare = force_nodes(fnc);
@@ -26,10 +29,6 @@ for fnc = 1:size(force_nodes)
         performance = immse(nn_output_compare,gpr_fit);
         e = mean(abs(gpr_err_list));
         emax = max(abs(gpr_err_list));
-        %histogram(gpr_err_list,20);
-        %title('Error Histogram with 20 Bins');
-        %xlabel('Errors (mm)')
-        %ylabel('Instances')
         
         err = [err e];
         maxe = [maxe emax];
@@ -37,12 +36,11 @@ for fnc = 1:size(force_nodes)
         perf = [perf performance];
 
     
-    Error(i,1) = mean(err);
-    %Perc_Error(i,1) = mean(ep);
-    Performance(i,1) = mean(perf);
-    Std(i,1) = mean(stad);
-    MaxE(i,1) = mean(maxe);
+    error(i,1) = mean(err);
+    performance(i,1) = mean(perf);
+    stdev(i,1) = mean(stad);
+    maxerr(i,1) = mean(maxe);
     i=i+1
 end
 
-T = table(Error,Performance,Std,MaxE);
+T = table(error,performance,stdev,maxerr);
