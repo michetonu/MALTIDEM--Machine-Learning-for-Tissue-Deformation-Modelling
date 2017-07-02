@@ -17,4 +17,4 @@ Dependencies to create custom meshes:
 2) ITK-SNAP (http://www.itksnap.org/) or 3D Slicer (https://www.slicer.org/) or equivalent to segment the tumour.
 3) MATLAB's iso2mesh toolbox (iso2mesh.sourceforge.net/)
 
-A brain mesh file is provided to test the code.
+A mesh file and the results of the simulations carried out with FEBio are provided.
